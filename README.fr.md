@@ -101,15 +101,15 @@ Trouvez tous les athlètes «F»
 ```sql
 SELECT *
 FROM athletes
-WHERE identified_gender = 'F';
+WHERE gender = 'F';
 ```
 
 Mettez à jour tous les «m» à «M».
 
 ```sql
 UPDATE athletes
-SET identified_gender = 'M'
-WHERE identified_gender = 'm';
+SET gender = 'M'
+WHERE gender = 'm';
 ```
 
 Et maintenant, tous les athlètes «M»
@@ -117,7 +117,7 @@ Et maintenant, tous les athlètes «M»
 ```sql
 SELECT *
 FROM athletes
-WHERE identified_gender = 'M';
+WHERE gender = 'M';
 ```
 
 Supprimons tous les athlètes.

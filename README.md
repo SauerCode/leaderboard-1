@@ -101,15 +101,15 @@ Let's find all 'F' athletes.
 ```sql
 SELECT *
 FROM athletes
-WHERE identified_gender = 'F';
+WHERE gender = 'F';
 ```
 
 Let's update all 'm's to 'M's.
 
 ```sql
 UPDATE athletes
-SET identified_gender = 'M'
-WHERE identified_gender = 'm';
+SET gender = 'M'
+WHERE gender = 'm';
 ```
 
 And now all 'M' athletes.
@@ -117,7 +117,7 @@ And now all 'M' athletes.
 ```sql
 SELECT *
 FROM athletes
-WHERE identified_gender = 'M';
+WHERE gender = 'M';
 ```
 
 Let's delete all athletes.
