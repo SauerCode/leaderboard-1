@@ -13,22 +13,31 @@
 
 ## Deliverables
 
-### Deliverable 1 (5%) Hello World
+* [Deliverable 1 (5%) Hello World](deliverable1.md)
+
+### Deliverable 2 (5%) DB Backed Application
 
 | Mark | Description | Comment |
-| --- | --- | -- |
-| 2.0 | GitHub repository setup | [GitHub Repo](https://github.com/aforward/leaderboard) |
-| 2.5 | ER model  | See below |
-| 2.5 | Relational model / SQL schema | Both image and SQL below |
-| 1.0 | SQL examples to INSERT, UPDATE, SELECT and DELETE data | See examples below |
+| --- | --- | --- |
+| 3.0 | ER model  | See below |
+| 3.0 | Relational model / SQL schema | Les images ci-dessous Image below, et [schema.sql](db/schema.sql) |
+| 1.0 | Application (read-only) | Instructions below |
+| 1.0 | SQL seed / examples to INSERT, UPDATE, SELECT and DELETE data | See below and seed.sql (link to come) |
 | 1.0 | README.md contains all required information | See _this_ page |
-| 1.0 | Git usage (commit messages, all students involved) | See [commit details in GitHub](https://github.com/aforward/leaderboard/commits/master) |
+| 1.0 | Git usage (commit messages, all students involved) | See [commit details in GitHub](https://github.com/aforward/leaderboard/commits/master)
 | / 10 | |
+
 
 ## Application Description
 
-The leaderboard database models an athlete, including
-details such as their name, date of birth, and identified gender.
+The leaderboard database models an `athletes`, including
+details such as their `name`, `date of birth`, and identified `gender`.
+
+The leaderboard tracks `competitions`.  A competition has a `name`,
+`venue`, a `start_date` and a `end_date`.
+
+An `athlete` can `register` for any competition.
+
 
 ## ER Model
 
@@ -44,34 +53,47 @@ The Relational Model (diagram) was also created with [Lucidchart](/lucidchart.md
 
 ## SQL Schema
 
-This was testing using [Online SQL Interpreter](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-available with the [textbook](https://www.db-book.com/db7/index.html).
+The [SQL Schema is available here](db/schema.sql).
+
+It was tested using [PostgreSQL](https://www.postgresql.org/).
+
+To create the `leaderboard` database run
+
+```bash
+psql -c "create database leaderboard"
+```
+
+To create the schema run
+
+```bash
+psql -d leaderboard -f ./db/schema.sql
+```
+
+If you already have a database, the migrations are available in
+
+```bash
+db/migrations
+```
+
+Run any (missing) migrations based on the timestamp date in the
+filename (i.e. `YYYYMMDDhhmmss` of `20200205100000-create-athletes.sql`).
 
 ```sql
-CREATE TABLE athletes (
-  id int,
-  identifier varchar(50),
-  created timestamp,
-  modified timestamp,
-  name varchar(50),
-  dob date,
-  identified_gender varchar(6),
-  PRIMARY KEY (id)
-);
+psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
 ```
 
 ## Example SQL Queries
 
-After running the above schema, you can test the queries below in the [Online SQL Interpreter](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-Refresh the browser if you want to start over.
+To populate to database [run this SEED file](db/seed.sql).
 
-```sql
-INSERT INTO athletes (id, name, identified_gender, dob)
-VALUES
-(1, 'Andrew', 'm', '1975-12-01'),
-(2, 'Ayana', 'F', '1998-06-11'),
-(3, 'Hayden', 'm', '1996-07-24'),
-(4, 'August', 'm', '1999-09-09');
+```bash
+psql -d leaderboard -f ./db/seed.sql
+```
+
+Now we can test out our databse in the postgres console.
+
+```bash
+psql -d leaderboard
 ```
 
 Let's find all 'F' athletes.

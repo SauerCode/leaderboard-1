@@ -13,22 +13,31 @@
 
 ## Livrables
 
-### Livrable 1 (5%) Hello-World
+* [Livrable 1 (5%) Hello-World](deliverable1.fr.md)
 
-| Note | Description | Commentaire |
+### Livrable 2 (5%) Application + DB
+
+| Mark | Description | Commentaire |
 | --- | --- | --- |
-| 2.0 | Configuration du repo GitHub | [GitHub Repo](https://github.com/aforward/leaderboard) |
-| 2.5 | Modèle ER | Voir ci-dessous |
-| 2.5 | Modèle relationnel / schéma SQL | Les images et SQL ci-dessous |
-| 1.0 | Exemples SQL pour insérer, mettre à jour, sélectionner et supprimer des données | Voir les exemples ci-dessous|
+| 3.0 | Modèle ER | Voir ci-dessous |
+| 3.0 | Modèle relationnel / schéma SQL | Les images ci-dessous, et [schema.sql](db/schema.sql) et [migrations](db/migrations) |
+| 1.0 | Application (READ-ONLY) | Les instructions ci-dessous |
+| 1.0 | SQL "seed" / exemples pour INSERT, UPDATE, SELECT, DELETE des données | Le [seed.sql](seed.sql) et les exemples ci-dessous |
 | 1.0 | README.md contient toutes les informations requises | Voir _cette_ page |
 | 1.0 | Utilisation de git (messages de commit, tous les étudiants impliqués) | Voir [les commits dans GitHub](https://github.com/aforward/leaderboard/commits/master) |
 | / 10 | |
 
+
 ## Description de l'application
 
-La base de données du leaderboard doit modéliser un athlète, y compris
-des détails tels que leur nom, leur date de naissance et leur sexe.
+La base de données du leaderboard modéliser les athlètes (`athletes`), y compris
+des détails tels que leur nom (`name`), leur date de naissance
+(`date of birth`) et leur sexe (`gender`).
+
+Le leaderboard inclus les `competitions`. Un compétition a un nom (`name`),
+lieu (`venue`), les date (`start_date` et `end_date`).
+
+Un `athlete` peut s'inscrire (`register`) à n'importe quelle compétition.
 
 ## Modèle ER
 
@@ -44,35 +53,47 @@ Le modèle relationnel (diagramme) a également été créé avec [Lucidchart](/
 
 ## Schéma SQL
 
-Cela a été testé avec [Online SQL Interpreter](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-dans le [manuel](https://www.db-book.com/db7/index.html).
+Le [schèma SQL](db/schema.sql).
+
+Il était testé avec [PostgreSQL](https://www.postgresql.org/).
+
+Pour créer le base de donnée `leaderboard`, exécutez
+
+```bash
+psql -c "create database leaderboard"
+```
+
+Pour remplir le [schèma](db/schema.sql) pour le base de donnée, exécutez
+
+```bash
+psql -d leaderboard -f ./db/schema.sql
+```
+
+Si vous avez déjà une base de donnée, les migrations sont disponsible dans
+
+```bash
+db/migrations
+```
+
+Exécutez toutes les migrations (manquantes) en order de la date dans le
+nom de fichier (e.x `YYYYMMDDhhmmss` of `20200205100000-create-athletes.sql`).
 
 ```sql
-CREATE TABLE athletes (
-  id int,
-  identifier varchar(50),
-  created timestamp,
-  modified timestamp,
-  name varchar(50),
-  dob date,
-  identified_gender varchar(6),
-  PRIMARY KEY (id)
-);
+psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
 ```
 
 ## Exemples de requêtes SQL
 
-Après avoir exécuté le schéma, vous pouvez tester les requêtes
-dans [Interpréteur SQL en ligne](https://www.db-book.com/db7/university-lab-dir/sqljs.html)
-"Refresh" le navigateur pour recommencer.
+Pour remplir le base de donnée avec le (seed.sql)
 
-```sql
-INSERT INTO athletes (id, name, identified_gender, dob)
-VALUES
-(1, 'Andrew', 'm', '1975-12-01'),
-(2, 'Ayana', 'F', '1998-06-11'),
-(3, 'Hayden', 'm', '1996-07-24'),
-(4, 'August', 'm', '1999-09-09');
+```bash
+psql -d leaderboard -f ./db/seed.sql
+```
+
+Maintenant on peut tester, on va utiliser le console PostgreSQL.
+
+```bash
+psql -d leaderboard
 ```
 
 Trouvez tous les athlètes «F»
