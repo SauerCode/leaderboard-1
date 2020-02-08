@@ -144,9 +144,18 @@ The output should look similar to
 
 ![Home Page](assets/homepage.png)
 
+If you click on a competition, you will see the registered athletes.
+
+![Competition Summary](assets/competitions.png)
+
+Or, if you no athletes are registered yet.
+
+![No Athletes](assets/competition_no_athletes.png)
+
+
 ## SQL Examples
 
-Now we can test out our databse in the postgres console.
+We also explore our database from the postgres console.
 
 ```bash
 psql -d leaderboard

@@ -29,7 +29,7 @@ table tr th {
     </tr>
     <?php foreach ($data as $row) {?>
       <tr>
-        <td><?php echo $row["name"] ?></td>
+        <td><a href="competition.php?id=<?php echo $row["identifier"] ?>"><?php echo $row["name"] ?></a></td>
         <td><?php echo $row["venue"] ?></td>
         <td><?php echo $row["start_date"] ?></td>
       </tr>
