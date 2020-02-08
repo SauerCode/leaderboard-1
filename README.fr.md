@@ -101,6 +101,8 @@ connecter à notre base de données.
 
 ### Installation
 
+#### PHP 7.3+
+
 Pour exécuter ce projet, vous devez avoir PHP et un console pour les commandes.
 Mon environnement (Mac OSX) est déjà fourni avec les deux.
 
@@ -117,6 +119,24 @@ PHP 7.3.9 (cli) (built: Nov  9 2019 08:08:13) ( NTS )
 Copyright (c) 1997-2018 The PHP Group
 Zend Engine v3.3.9, Copyright (c) 1998-2018 Zend Technologies
 ```
+
+#### Postgres 11+
+
+L'application se connecte à une base de données postgres.
+Vous devrez l'installer localement.
+
+Cela a été testé sur `PostgreSQL 11.5`
+
+```bash
+psql --version
+```
+
+The output should show something similar to
+
+```bash
+psql (PostgreSQL) 11.5
+```
+
 
 ### Running
 

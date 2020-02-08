@@ -100,6 +100,8 @@ A web application has developed to connect to our database.
 
 ### Installation
 
+#### PHP 7.3+
+
 To run this project, you need to PHP and a command line.
 My environment (Mac OSX) comes with both already, if
 yours does not, please submit a PR showing how you got
@@ -117,6 +119,23 @@ The output should show something similar to
 PHP 7.3.9 (cli) (built: Nov  9 2019 08:08:13) ( NTS )
 Copyright (c) 1997-2018 The PHP Group
 Zend Engine v3.3.9, Copyright (c) 1998-2018 Zend Technologies
+```
+
+#### Postgres 11+
+
+The application connects to a postgres database.
+You will need to install that locally.
+
+This was tested on `PostgreSQL 11.5`
+
+```bash
+psql --version
+```
+
+The output should show something similar to
+
+```bash
+psql (PostgreSQL) 11.5
 ```
 
 ### Running
