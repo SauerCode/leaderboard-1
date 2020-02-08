@@ -96,7 +96,7 @@ psql -d leaderboard -f ./db/seed.sql
 
 ## Web App (PHP)
 
-A web application has developed to connect to our database
+A web application has developed to connect to our database.
 
 ### Installation
 

@@ -86,7 +86,7 @@ psql -d leaderboard -f ./db/migrations/20200206230001-update-athletes.sql
 psql -d leaderboard -f ./db/migrations/20200206230002-create-competitions.sql
 ```
 
-## Exemples de requêtes SQL
+## Ajout de données ("seed")
 
 Pour remplir le base de donnée avec le (seed.sql)
 
@@ -94,7 +94,66 @@ Pour remplir le base de donnée avec le (seed.sql)
 psql -d leaderboard -f ./db/seed.sql
 ```
 
-Maintenant on peut tester, on va utiliser le console PostgreSQL.
+## Web App (PHP)
+
+Une application web a été développée pour se
+connecter à notre base de données.
+
+### Installation
+
+Pour exécuter ce projet, vous devez avoir PHP et un console pour les commandes.
+Mon environnement (Mac OSX) est déjà fourni avec les deux.
+
+Cela a été testé sur `PHP 7.3`
+
+```bash
+php --version
+```
+
+La sortie montre quelque chose de similaire à
+
+```bash
+PHP 7.3.9 (cli) (built: Nov  9 2019 08:08:13) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.3.9, Copyright (c) 1998-2018 Zend Technologies
+```
+
+### Running
+
+Pour démarrer le serveur PHP, exécutez le suivant à
+la racine du projet.
+
+```bash
+(cd public && php -S localhost:4000)
+```
+
+La sortie doit ressembler à
+
+```bash
+Listening on http://localhost:4000
+Document root is /Users/aforward/sin/projects/current/professor-forward/phpapp/public
+Press Ctrl-C to quit.
+```
+
+Vous pouvez ouvrir dans un navigateur, votre application Web PHP.
+
+[http://localhost:4000](http://localhost:4000)
+
+La sortie doit ressembler à
+
+![Home Page](assets/homepage.png)
+
+Si vous cliquez sur une compétition, vous verrez les athlètes inscrits.
+
+![Competition Summary](assets/competitions.png)
+
+Ou, si aucun athlète n'est encore inscrit.
+
+![No Athletes](assets/competition_no_athletes.png)
+
+## Exemples SQL
+
+Nous pouvons explorer le base de données sur la console postgres.
 
 ```bash
 psql -d leaderboard
