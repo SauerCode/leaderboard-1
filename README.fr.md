@@ -80,6 +80,10 @@ nom de fichier (e.x `YYYYMMDDhhmmss` of `20200205100000-create-athletes.sql`).
 
 ```sql
 psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200206230000-create-migrations.sql
+psql -d leaderboard -f ./db/migrations/20200206230001-update-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200206230002-create-competitions.sql
 ```
 
 ## Exemples de requêtes SQL
@@ -101,34 +105,67 @@ Trouvez tous les athlètes «F»
 ```sql
 SELECT *
 FROM athletes
-WHERE gender = 'F';
+WHERE gender = 'f';
 ```
 
-Mettez à jour tous les «m» à «M».
+Changez les noms de nos athlètes.
 
 ```sql
 UPDATE athletes
-SET gender = 'M'
-WHERE gender = 'm';
+SET name = concat(name, ' Forward');
 ```
 
-Et maintenant, tous les athlètes «M»
+Let's add a new athlete.
 
 ```sql
-SELECT *
-FROM athletes
-WHERE gender = 'M';
+INSERT INTO athletes (name, gender, dob)
+VALUES
+('Kyle Krager', 'm', '1975-10-10');
 ```
 
-Supprimons tous les athlètes.
+Let's register him in the Bytown Closed.
 
 ```sql
-DELETE FROM athletes;
+INSERT INTO registrations (athlete_id, competition_id, age, gender)
+SELECT
+    (SELECT id FROM athletes WHERE name = 'Kyle Krager') AS athlete_id,
+    (SELECT id FROM competitions WHERE name = 'Bytown Closed 2020') AS competition_id,
+    45,
+    'm';
 ```
 
-Et maintenant c'est vide.
+Let's update the ages of `Andrew` and `Ayana` in the Bytown competition
+
+```sql
+UPDATE registrations
+SET age = 41
+WHERE athlete_id IN (
+  SELECT id from athletes WHERE name in ('Andrew Forward', 'Ayana Forward'));
+```
+
+Let's view all athletes registered in the Bytown Closed 2020.
+
+```sql
+SELECT athletes.name,
+       registrations.gender,
+       registrations.age,
+       competitions.name,
+       competitions.venue
+FROM registrations
+INNER JOIN athletes ON athletes.id = registrations.athlete_id
+INNER JOIN competitions ON competitions.id = registrations.competition_id
+WHERE competitions.name = 'Bytown Closed 2020';
+```
+
+Let's delete all registrations.
+
+```sql
+DELETE FROM registrations;
+```
+
+And now the table is empty.
 
 ```sql
 SELECT count(*)
-FROM athletes;
+FROM registrations;
 ```

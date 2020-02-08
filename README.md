@@ -80,6 +80,10 @@ filename (i.e. `YYYYMMDDhhmmss` of `20200205100000-create-athletes.sql`).
 
 ```sql
 psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200206230000-create-migrations.sql
+psql -d leaderboard -f ./db/migrations/20200206230001-update-athletes.sql
+psql -d leaderboard -f ./db/migrations/20200206230002-create-competitions.sql
 ```
 
 ## Example SQL Queries
@@ -96,39 +100,72 @@ Now we can test out our databse in the postgres console.
 psql -d leaderboard
 ```
 
-Let's find all 'F' athletes.
+Let's find all 'f' athletes.
 
 ```sql
 SELECT *
 FROM athletes
-WHERE gender = 'F';
+WHERE gender = 'f';
 ```
 
-Let's update all 'm's to 'M's.
+Changez les noms de nos athlètes.
 
 ```sql
 UPDATE athletes
-SET gender = 'M'
-WHERE gender = 'm';
+SET name = concat(name, ' Forward');
 ```
 
-And now all 'M' athletes.
+Ajoutons un nouvel athlète.
 
 ```sql
-SELECT *
-FROM athletes
-WHERE gender = 'M';
+INSERT INTO athletes (name, gender, dob)
+VALUES
+('Kyle Krager', 'm', '1975-10-10');
 ```
 
-Let's delete all athletes.
+Inscrivons-lui dans le Bytown Closed.
 
 ```sql
-DELETE FROM athletes;
+INSERT INTO registrations (athlete_id, competition_id, age, gender)
+SELECT
+    (SELECT id FROM athletes WHERE name = 'Kyle Krager') AS athlete_id,
+    (SELECT id FROM competitions WHERE name = 'Bytown Closed 2020') AS competition_id,
+    45,
+    'm';
 ```
 
-And now the table is empty.
+Mettons à jour les âges de «Andrew» et «Ayana» dans le concours Bytown
+
+```sql
+UPDATE registrations
+SET age = 41
+WHERE athlete_id IN (
+  SELECT id from athletes WHERE name in ('Andrew Forward', 'Ayana Forward'));
+```
+
+Voyons tous les athlètes inscrits au Bytown Closed 2020.
+
+```sql
+SELECT athletes.name,
+       registrations.gender,
+       registrations.age,
+       competitions.name,
+       competitions.venue
+FROM registrations
+INNER JOIN athletes ON athletes.id = registrations.athlete_id
+INNER JOIN competitions ON competitions.id = registrations.competition_id
+WHERE competitions.name = 'Bytown Closed 2020';
+```
+
+Supprimons toutes les inscriptions.
+
+```sql
+DELETE FROM registrations;
+```
+
+Et maintenant, la table est vide.
 
 ```sql
 SELECT count(*)
-FROM athletes;
+FROM registrations;
 ```
