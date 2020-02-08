@@ -142,7 +142,7 @@ And now you can open in a browser, your PHP web app.
 
 The output should look similar to
 
-![PHP Info](assets/help/phpinfo.png)
+![Home Page](assets/homepage.png)
 
 ## SQL Examples
 
