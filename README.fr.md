@@ -80,7 +80,6 @@ nom de fichier (e.x `YYYYMMDDhhmmss` of `20200205100000-create-athletes.sql`).
 
 ```sql
 psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
-psql -d leaderboard -f ./db/migrations/20200205100000-create-athletes.sql
 psql -d leaderboard -f ./db/migrations/20200206230000-create-migrations.sql
 psql -d leaderboard -f ./db/migrations/20200206230001-update-athletes.sql
 psql -d leaderboard -f ./db/migrations/20200206230002-create-competitions.sql
